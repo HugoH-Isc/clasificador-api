@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://latex.now.sh/lang/es.css" />
+    <link rel="stylesheet" href="https://latex.now.sh/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _external=True) }}">
+    <title>Reporte de procesamiento</title>
+</head>
+
+<body>
+
+  <main class="layout-filas">
+    <div class="">
+      <center>
+	<h2>Reporte de procesamiento</h2>
+      </center>
+    </div>
+    <div class="layout-filas">
+      <div>
+	<h4>Etapa de preprocesamiento</h4>
+      </div>
+      <div class="layout-columnas">
+	<div class="contenedor-imagen">
+	  <figure>
+	    <img src="data:image/jpeg;charset=utf-8;base64, {{ original }}" />
+	    <figcaption>Figura 1. Imagen original</figcaption>
+	  </figure>
+        </div>
+        <div class="contenedor-icono">
+	  <i class="fa-solid fa-arrow-right-long"></i>
+	</div>
+        <div class="contenedor-imagen">
+	  <figure>
+	    <img src="data:image/jpeg;charset=utf-8;base64, {{ preprocesada }}" />
+	    <figcaption>Figura 2. Imagen preprocesada</figcaption>
+	  </figure>
+        </div>
+      </div>
+    </div>
+    <div class="layout-filas">
+      <div>
+	<h4>Etapa de segmentaci&oacute;n</h4>
+      </div>
+      <div class="layout-filas">
+	<div class="layout-columnas">
+	  <div></div>
+	  <div class="contenedor-imagen">
+	    <figure>
+	      <img src="data:image/jpeg;charset=utf-8;base64, {{ segmentada }}" />
+	      <figcaption>Figura 3. Imagen Segmentada</figcaption>
+	    </figure>
+          </div>
+	  <div></div>
+	</div>
+	<div class="layout-columnas">
+	  <div class="contenedor-imagen">
+	    <figure>
+	      <img src="data:image/jpeg;charset=utf-8;base64, {{ c_blanco }}" />
+	      <figcaption>Figura 4. Cluster Blanco</figcaption>
+	    </figure>
+	  </div>
+	  <div class="contenedor-imagen">
+	    <figure>
+	      <img src="data:image/jpeg;charset=utf-8;base64, {{ c_rosa }}" />
+	      <figcaption>Figura 5. Cluster Rosa</figcaption>
+	    </figure>
+          </div>
+          <div class="contenedor-imagen">
+	    <figure>
+	      <img src="data:image/jpeg;charset=utf-8;base64, {{ c_purpura }}" />
+	      <figcaption>Figura 6. Cluster Purpura</figcaption>
+	    </figure>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div class="layout-filas">
+      <div>
+	<h4>Extracci&oacute;n de caracter&iacute;sticas</h4>
+      </div>
+      <div class="contenedor-tabla">
+	<table>
+	  <caption>Caracter&iacute;sticas del cluster blanco</caption>
+	  <thead>
+	    <tr>
+	      {% for i in range(13) %}
+		<th>{{ cabeceras[i] }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	      {% for i in range(13) %}
+		<td>{{ "%.2f" | format( caracteristicas[i]|float ) }}</td>
+	      {% endfor %}
+	  </tbody>
+	</table>
+      </div>
+      <div class="contenedor-tabla">
+	<table>
+	  <caption>Caracter&iacute;sticas del cluster rosa</caption>
+	  <thead>
+	    <tr>
+	      {% for i in range(13,26) %}
+		<th>{{ cabeceras[i] }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	      {% for i in range(13,26) %}
+		<td>{{ "%.2f" | format( caracteristicas[i]|float ) }}</td>
+	      {% endfor %}
+	  </tbody>
+	</table>
+      </div>
+      <div class="contenedor-tabla">
+	<table>
+	  <caption>Caracter&iacute;sticas del cluster purpura</caption>
+	  <thead>
+	    <tr>
+	      {% for i in range(26,39) %}
+		<th>{{ cabeceras[i] }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	      {% for i in range(26,39) %}
+		<td>{{ "%.2f" | format( caracteristicas[i]|float ) }}</td>
+	      {% endfor %}
+	  </tbody>
+	</table>
+      </div>
+    </div>
+    <div class="layout-filas">
+      <div>
+	<h4>An&aacute;lisis principal de componentes</h4>
+      </div>
+      <div class="contenedor-tabla" >
+	<table>
+	  <caption>Caracter&iacute;sticas despu&eacute;s de la reducci&oacute;n de dimensionalidad</caption>
+	  <thead>
+	    <tr>
+	      {% for componente in componentes %}
+		<th>{{ componente }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	      {% for proyeccion in proyecciones %}
+		<td>{{ "%.2f" | format( proyeccion|float ) }}</td>
+	      {% endfor %}
+	  </tbody>
+	</table>	
+      </div>
+    </div>
+
+
+    <div class="layout-filas">
+      <div>
+	<h4>Resultado de clasificaci&oacute;n</h4>
+      </div>
+      <div>
+
+	{% if resultado == 1 %}
+	  <div class="resultado">
+	    <i class="fa-regular fa-xmark-large"></i>
+	    <p class="">
+	      La imagen fue clasificada como <span id="normal" class="resultado">normal</span>
+	    </p>
+	  </div>
+	{% else %}
+	  <div class="resultado">
+	      <i class="fa-regular fa-xmark-large"></i>
+	      <p class="">
+		La imagen fue clasificada como <span id="anormal" class="resutlado" >anormal</span>
+	      </p>
+	  </div>
+	{% endif %}
+
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
