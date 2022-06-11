@@ -7,7 +7,7 @@ import cv2
 
 from clasificacion import clasificador
 
-api = Api2Pdf('6be3ba4a-0f58-4bfb-9082-5d6f36788c42')
+api = Api2Pdf('5e7ee2fc-1070-4809-9984-0be23e9f734c')
 app = Flask(__name__)
 CORS(app)
 
